@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import pytest
 
-from ftwpki.ca_root_sign.programms import prog_ca_root_singing
+from ftwpki.ca_root_signer.programms import prog_ca_root_singing
 
 # SECTION - Programm: Signing
 
@@ -115,7 +115,7 @@ VALID_ARGV = ["my_pass_file", "my_request.csr"]
 
 def test_prog_ca_root_singing_exception():
     # Testet den harten Absturz (Return 2)
-    with patch("ftwpki.ca_root.programms.CSRSigningParser") as mock_parser:
+    with patch("ftwpki.ca_root_signer.programms.CSRSigningParser") as mock_parser:
         # Wir lassen die Instanziierung des Parsers scheitern
         mock_parser.side_effect = Exception("Crash")
 

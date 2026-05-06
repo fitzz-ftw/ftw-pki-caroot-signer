@@ -31,7 +31,7 @@ Core Pillars:
    :maxdepth: 1
    :caption: Quick Start Guide:
 
-   devel/get_started_run_programms.ci
+   devel/get_started_programms.ci
 
 
 .. toctree::
