@@ -126,6 +126,7 @@ if __name__ == "__main__":  # pragma: no cover
     option_flags = FAIL_FAST
     test_sum = 0
     test_failed = 0
+    passed_files = 0
 
     # Pfad zu den dokumentierenden Tests
     testfiles_dir = Path(__file__).parents[3] / "doc/source/devel"
@@ -145,9 +146,18 @@ if __name__ == "__main__":  # pragma: no cover
             )
             test_failed += doctestresult.failed
             test_sum += doctestresult.attempted
+            if doctestresult.failed > 0 and option_flags & FAIL_FAST:
+                print(f"Doctest result for {test_file.name}: {doctestresult}")
+                print(
+                    f"\nKeep going! You already passed {passed_files} files "
+                    f"with {test_sum} tests before this hit."
+                )
+                break  # Stop on first failure if FAIL_FAST is set
+            passed_files += 1
         else:
             print(f"⚠️ Warning: Test file {test_file.name} not found.")
     if test_failed == 0:
         print(f"\nDocTests passed without errors, {test_sum} tests.")
     else:
-        print(f"\nDocTests failed: {test_failed} tests.")
+        if not option_flags & FAIL_FAST:
+            print(f"\nDocTests failed: {test_failed} tests out of {test_sum}.")

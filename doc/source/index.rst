@@ -1,36 +1,21 @@
-.. ftw-devtools documentation master file
+.. ftw-pki documentation master file
 
-ftw-devtools: The Swiss Army Knife for Testing & Git Workflows
-==============================================================
+Welcome to the documentation!
+=============================
 
-`ftw-devtools` is a comprehensive suite of utilities designed to bring 
-order to complex development environments. Whether you are battling 
-side effects in your test suite or wrestling with messy Git histories, 
-this toolkit provides the necessary abstractions to keep your project 
-clean and maintainable.
+.. include:: ../../README.md
+   :parser: myst_parser.sphinx_
 
-Core Pillars:
+
+
+Documentation
 -------------
-
-* **Isolated Testing Infrastructure**: 
-  Stop letting your tests pollute your `$HOME` directory. With 
-  `TestHomeEnvironment`, you get a pristine, sandboxed environment 
-  for every test run, ensuring reproducibility and safety.
-
-* **Git & Workflow Automation**: 
-  Take the friction out of repository management. From high-level API 
-  access to specialized CLI tools like `ftwchangelog`, we automate the 
-  tedious parts of your version control workflow.
-
-* **Documentation-Driven Testing**: 
-  Bridge the gap between your code and your manuals. Our helpers 
-  ensure that your documentation stays in sync with your actual 
-  command-line output.
 
 .. toctree::
    :maxdepth: 1
    :caption: Quick Start Guide:
 
+   user/cli_caroot_signer
    devel/get_started_programms.ci
 
 
