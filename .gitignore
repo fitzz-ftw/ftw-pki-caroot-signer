@@ -61,3 +61,7 @@ reports
 #Esbonio
 _build
 piplist.txt
+
+# Pytest coverage
+htmlcov
+git-log.txt
