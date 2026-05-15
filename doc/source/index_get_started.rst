@@ -11,3 +11,4 @@ supported Python versions (3.11 - 3.15).
    :caption: Module Guides:
 
    devel/get_started_programms.ci
+   devel/get_started_run_programms.ci
