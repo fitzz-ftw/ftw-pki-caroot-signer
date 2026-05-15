@@ -92,7 +92,7 @@ def setup(app:Sphinx) -> None:
 
 
 #SECTION - Project information -----------------------------------------------------
-project = "ftw-pki-caroot-signer"
+project = "FTW PKI CA Root Signer"
 copyright = "2026, Fitzz TeΧnik Welt"
 author = "Fitzz TeΧnik Welt"
 html_show_copyright = True
@@ -165,7 +165,6 @@ toc_object_entries_show_parents = "hide"
 #SECTION - Options for Intersphinx
 intersphinx_mapping = {
     "python": (f"https://docs.python.org/{sys.version_info.major}.{sys.version_info.minor}", None),
-    "platformdirs": ("https://platformdirs.readthedocs.io/en/latest/", None),
 }
 #!SECTION - Options for Intersphinx
 
@@ -287,7 +286,7 @@ def create_mermaid_decision_maker(whitelist:list[str]|None=None,
             return False
 
     return should_render_mermaid
-# SECTION - Function for Autosummary
+# !SECTION - Function for Autosummary
 
 #SECTION - Options for Autosummary 
 autosummary_generate = True

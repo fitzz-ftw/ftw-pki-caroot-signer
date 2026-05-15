@@ -18,7 +18,8 @@ write_to = "src/ftwpki/ca_root_signer/_version.py"
 [project]
 name = "ftw-pki-caroot-signer"
 dynamic = ["version"]
-description = ""
+dependencies = ["ftw-pki-libs"]
+description = "A specialized tool for signing Root CA certificates within the FTW PKI ecosystem."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "LGPL-2.1-or-later"
@@ -41,7 +42,6 @@ classifiers = [
     "Programming Language :: Python :: 3.15",
     "Topic :: Security",
 ]
-dependencies = ["ftw-pki-libs",]
 
 [project.urls]
 Homepage = "https://github.com/fitzz-ftw/ftw-pki-caroot-signer"
