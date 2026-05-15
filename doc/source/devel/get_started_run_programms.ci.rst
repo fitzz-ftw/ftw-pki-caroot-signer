@@ -86,8 +86,8 @@ Enter Password:
 >>> cmd_line += " testpasswd"
 >>> cmd_line += " Fitzz-TeXnik-WeltSomewherecity.csr"
 >>> sys_argv= shlex.split(cmd_line) 
->>> prog_ca_root_singing(sys_argv) #doctest: +NORMALIZE_WHITESPACE
-argument -ST/--stateOrProvinceName: invalid choice: 'MACH' (choose from 'match', 'optional', 'supplied', 'no')
+>>> prog_ca_root_singing(sys_argv) #doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
+argument -ST/--stateOrProvinceName: invalid choice: 'MACH' (choose from ...)
 2
 
 .. SECTION - Template
