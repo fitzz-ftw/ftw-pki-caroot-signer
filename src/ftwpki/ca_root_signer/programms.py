@@ -131,8 +131,8 @@ if __name__ == "__main__":  # pragma: no cover
     # Pfad zu den dokumentierenden Tests
     testfiles_dir = Path(__file__).parents[3] / "doc/source/devel"
     test_files = [
-        "get_started_programms.ci.rst",
-        # "get_started_run_programms.ci.rst",
+        # "get_started_programms.ci.rst",
+        "get_started_run_programms.ci.rst",
     ]
     for file in test_files:
         test_file = testfiles_dir / file
