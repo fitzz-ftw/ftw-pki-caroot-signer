@@ -1,7 +1,7 @@
 FTW Modules
 ######################
 
-.. automodule:: ftwpki.client_server
+.. automodule:: ftwpki.ca_root_signer
    :no-members:
    :no-undoc-members:
 
