@@ -27,7 +27,7 @@ The Signing Programm
 
 
 >>> cmd_line =  "--conf-file ca_root_conf.toml"
->>> cmd_line += " -k privat/ca.key.pem "
+>>> cmd_line += " -k privat/ca "
 >>> cmd_line += " --private-dir privat"
 >>> cmd_line += " --policy-name intermediate"
 >>> cmd_line += " -c ca.cert"
@@ -38,7 +38,7 @@ The Signing Programm
 >>> sys_argv= shlex.split(cmd_line) 
 >>> sys_argv #doctest: +NORMALIZE_WHITESPACE
 ['--conf-file', 'ca_root_conf.toml', 
- '-k', 'privat/ca.key.pem', 
+ '-k', 'privat/ca', 
  '--private-dir', 'privat', 
  '--policy-name', 'intermediate',
  '-c', 'ca.cert',
@@ -72,7 +72,7 @@ Namespace(countryName='match',
     commonName='supplied', 
     policy_name='intermediate',
     conf_file=...Path('ca_root_conf.toml'), 
-    private_key='privat/ca.key.pem', 
+    key_name='privat/ca', 
     private_dir='privat',
     certificate='ca.cert',
     validity_days=365,
@@ -84,7 +84,8 @@ Namespace(countryName='match',
         'localityName': 'optional', 
         'organizationName': 'match', 
         'organizationalUnitName': 'optional', 
-        'commonName': 'supplied'})
+        'commonName': 'supplied'}, 
+     private_key='privat/ca.key.pem')
 
 .. !SECTION
 
@@ -171,7 +172,8 @@ Enter Password:
 ...     **extention)
 
 >>> signed_pem = cert_signer.get_pem(signed_cert)
->>> target_path = Path(args.certificat_sign_request).with_suffix(".crt")
+>>> target_path = Path(args.certificat_sign_request).with_suffix(".crt.pem")
+
 >>> save_pem(data = signed_pem, 
 ...     target_path=target_path, 
 ...     is_private = True)
@@ -187,6 +189,9 @@ Enter Password:
 ...     signed_cert, # recipient_cert
 ...     signed_cert,
 ...     ca_cert,
+...     name_user=target_path.name,
+...     name_chain="all.chain.pem",
+...     name_ca = "ca.cert.pem",
 ...     )
 
 >>> transfer_file_path = Path(args.certificat_sign_request).with_suffix(".zip.enc")
@@ -266,7 +271,7 @@ Subject:
 
 .. SECTION - Teardown
 
->>> env.clean_home()
+>> env.clean_home()
 >>> env.teardown()
 
 .. !SECTION

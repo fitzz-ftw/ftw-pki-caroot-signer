@@ -28,7 +28,7 @@ Running the programm Successfully and Errors
 >>> getpass.getpass = stub_input
 
 >>> cmd_line =  "--conf-file ca_root_conf.toml"
->>> cmd_line += " -k privat/ca.key.pem "
+>>> cmd_line += " -k privat/ca "
 >>> cmd_line += " --private-dir privat"
 >>> cmd_line += " --policy-name intermediate"
 >>> cmd_line += " -c ca.cert"
@@ -39,7 +39,7 @@ Running the programm Successfully and Errors
 >>> sys_argv= shlex.split(cmd_line) 
 >>> sys_argv #doctest: +NORMALIZE_WHITESPACE
 ['--conf-file', 'ca_root_conf.toml', 
- '-k', 'privat/ca.key.pem', 
+ '-k', 'privat/ca', 
  '--private-dir', 'privat', 
  '--policy-name', 'intermediate',
  '-c', 'ca.cert',
@@ -93,7 +93,7 @@ argument -ST/--stateOrProvinceName: invalid choice: 'MACH' (choose from ...)
 .. SECTION - Template
 
 >>> cmd_line =  "--conf-file ca_root_conf.toml"
->>> cmd_line += " -k privat/ca.key.pem "
+>>> cmd_line += " -k privat/ca "
 >>> cmd_line += " --private-dir privat"
 >>> cmd_line += " --policy-name intermediate"
 >>> cmd_line += " -c ca.cert"

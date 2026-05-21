@@ -53,7 +53,7 @@ def ca_test_env(monkeypatch):
 def test_prog_ca_root_singing_success(ca_test_env):
     """Szenario: Alles korrekt -> Return 0"""
     cmd = (
-        "--conf-file ca_root_conf.toml -k privat/ca.key.pem "
+        "--conf-file ca_root_conf.toml -k privat/ca "
         "--private-dir privat --policy-name intermediate "
         "-c ca.cert testpasswd Fitzz-TeXnik-WeltSomewherecity.csr"
     )
@@ -64,7 +64,7 @@ def test_prog_ca_root_singing_success(ca_test_env):
 
     assert result == 0
     # Check ob das Zertifikat erstellt wurde
-    assert Path("Fitzz-TeXnik-WeltSomewherecity.crt").exists()
+    assert Path("Fitzz-TeXnik-WeltSomewherecity.crt.pem").exists()
     # Check ob Datenbank-Eintrag existiert
     assert Path("db/index.txt").exists()
 
@@ -74,7 +74,7 @@ def test_prog_ca_root_singing_success(ca_test_env):
 def test_prog_ca_root_singing_success_dbdir_exists(ca_test_env):
     """Szenario: Alles korrekt -> Return 0"""
     cmd = (
-        "--conf-file ca_root_conf.toml -k privat/ca.key.pem "
+        "--conf-file ca_root_conf.toml -k privat/ca "
         "--private-dir privat --policy-name intermediate "
         "-c ca.cert testpasswd Fitzz-TeXnik-WeltSomewherecity.csr"
     )
@@ -88,7 +88,7 @@ def test_prog_ca_root_singing_success_dbdir_exists(ca_test_env):
 
     assert result == 0
     # Check ob das Zertifikat erstellt wurde
-    assert Path("Fitzz-TeXnik-WeltSomewherecity.crt").exists()
+    assert Path("Fitzz-TeXnik-WeltSomewherecity.crt.pem").exists()
     # Check ob Datenbank-Eintrag existiert
     assert Path("db/index.txt").exists()
 
@@ -108,7 +108,7 @@ def test_prog_ca_root_singing_validation_fail(ca_test_env):
         m.setattr("getpass.getpass", lambda _: "strenggeheim")
 
         cmd = (
-            "--conf-file ca_root_conf.toml -k privat/ca.key.pem "
+            "--conf-file ca_root_conf.toml -k privat/ca "
             "--private-dir privat -c ca.cert testpasswd "
             "Fitzz-TeXnik-WeltSomewherecity.csr"
         )

@@ -46,10 +46,13 @@ def prog_ca_root_singing(argv: list[str] | None = None) -> int:
     try:
         # SECTION - Configuration
         ca_parser = CSRSigningParser()
+        # for k, v in toml2dn_policy(argv).items():
+        #     print(f"{k}: {v}")
         ca_parser.set_defaults(**toml2dn_policy(argv))
         args = ca_parser.parse_args(argv)
         # !SECTION - Configuration
 
+        # print(f"{args.policy}")
         # SECTION - Validating
         ca_cert = load_certificate_from_pem(pem_data=Path(args.certificate).read_bytes())
         csr = load_csr_from_pem(Path(args.certificat_sign_request).read_bytes())
@@ -79,9 +82,10 @@ def prog_ca_root_singing(argv: list[str] | None = None) -> int:
             csr=csr, policy=policy, validity_days=validity_days.actual_days
         )
         signed_pem = cert_signer.get_pem(signed_cert)
+        target_path:Path = Path(args.certificat_sign_request).with_suffix(".crt.pem")
         save_pem(
             data=signed_pem,
-            target_path=Path(args.certificat_sign_request).with_suffix(".crt"),
+            target_path= target_path,
             is_private=True,
         )
         # !SECTION - Signing
@@ -94,6 +98,9 @@ def prog_ca_root_singing(argv: list[str] | None = None) -> int:
             signed_cert,  # recipient_cert
             signed_cert,
             ca_cert,
+            name_user=target_path.name,
+            name_chain="all.chain.pem",
+            name_ca = "ca.crt.pem",
         )
 
         transfer_file_path = Path(args.certificat_sign_request).with_suffix(".zip.enc")
@@ -131,7 +138,7 @@ if __name__ == "__main__":  # pragma: no cover
     # Pfad zu den dokumentierenden Tests
     testfiles_dir = Path(__file__).parents[3] / "doc/source/devel"
     test_files = [
-        # "get_started_programms.ci.rst",
+        "get_started_programms.ci.rst",
         "get_started_run_programms.ci.rst",
     ]
     for file in test_files:
