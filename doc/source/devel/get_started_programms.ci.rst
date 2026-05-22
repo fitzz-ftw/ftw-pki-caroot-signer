@@ -53,13 +53,13 @@ The Signing Programm
 
 .. SECTION - Configuration
 
->>> from ftwpki.baselibs.toml_utils import toml2dn_policy, toml2ext_policy
+>>> from ftwpki.baselibs.toml_utils import toml2_dn_policy, toml2ext_policy
 >>> from ftwpki.baselibs.cli_parser import CSRSigningParser
 >>> from ftwpki.baselibs.policies import IntermediatePolicy
 
 >>> ca_parser = CSRSigningParser(prog="ftwpkicasign")
 
->>> ca_parser.set_defaults(**toml2dn_policy(sys_argv))
+>>> ca_parser.set_defaults(**toml2_dn_policy(sys_argv))
 >>> extention = toml2ext_policy(sys_argv)
 
 >>> args = ca_parser.parse_args(sys_argv)

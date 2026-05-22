@@ -27,7 +27,7 @@ from ftwpki.baselibs.openssl_comp import DbOpensslFile
 from ftwpki.baselibs.passwd import PasswordManager
 from ftwpki.baselibs.policies import IntermediatePolicy
 from ftwpki.baselibs.signer import CertificateSigner
-from ftwpki.baselibs.toml_utils import toml2dn_policy
+from ftwpki.baselibs.toml_utils import toml2_dn_policy
 from ftwpki.baselibs.transport import encrypt_transport_package
 from ftwpki.baselibs.validate import ValidatorDN, validate_and_clamp_validity
 
@@ -46,9 +46,9 @@ def prog_ca_root_singing(argv: list[str] | None = None) -> int:
     try:
         # SECTION - Configuration
         ca_parser = CSRSigningParser()
-        # for k, v in toml2dn_policy(argv).items():
+        # for k, v in toml2_dn_policy(argv).items():
         #     print(f"{k}: {v}")
-        ca_parser.set_defaults(**toml2dn_policy(argv))
+        ca_parser.set_defaults(**toml2_dn_policy(argv))
         args = ca_parser.parse_args(argv)
         # !SECTION - Configuration
 
