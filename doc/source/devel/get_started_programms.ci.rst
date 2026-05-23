@@ -53,14 +53,27 @@ The Signing Programm
 
 .. SECTION - Configuration
 
->>> from ftwpki.baselibs.toml_utils import toml2_dn_policy, toml2ext_policy
->>> from ftwpki.baselibs.cli_parser import CSRSigningParser
+>>> from ftwpki.baselibs.toml_utils import toml2dn_policy, toml2ext, toml2dn
+>>> from ftwpki.baselibs.cli_parser import CSRSigningParser, TomlPreParser
 >>> from ftwpki.baselibs.policies import IntermediatePolicy
+
+
+>>> pre_parser = TomlPreParser()
+>>> pre_args , _ = pre_parser.parse_known_args(sys_argv)
+
+>>> pre_conf = toml2dn_policy(pre_args.conf_file, pre_args.policy_name)
+
+>> pre_conf  
+
 
 >>> ca_parser = CSRSigningParser(prog="ftwpkicasign")
 
->>> ca_parser.set_defaults(**toml2_dn_policy(sys_argv))
->>> extention = toml2ext_policy(sys_argv)
+>>> ca_parser.set_defaults(**pre_conf)
+
+
+> ca_parser.set_defaults(**toml2_dn_policy(sys_argv))
+
+>>> extention = toml2ext(pre_args.conf_file, pre_args.policy_name)
 
 >>> args = ca_parser.parse_args(sys_argv)
 >>> args #doctest: +NORMALIZE_WHITESPACE +ELLIPSIS 

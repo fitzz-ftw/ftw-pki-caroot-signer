@@ -50,9 +50,9 @@ Running the programm Successfully and Errors
 .. !SECTION
 .. SECTION - Start programm function
 
->>> from ftwpki.ca_root_signer.programms import prog_ca_root_singing
+>>> from ftwpki.ca_root_signer.programms import prog_ca_root_signing
 
->>> prog_ca_root_singing(sys_argv)
+>>> prog_ca_root_signing(sys_argv)
 Enter Password:
 0
 
@@ -73,7 +73,7 @@ Enter Password:
 >>> cmd_line += " testpasswd"
 >>> cmd_line += " Fitzz-TeXnik-WeltSomewherecity.csr"
 >>> sys_argv= shlex.split(cmd_line) 
->>> prog_ca_root_singing(sys_argv) #doctest: +NORMALIZE_WHITESPACE
+>>> prog_ca_root_signing(sys_argv) #doctest: +NORMALIZE_WHITESPACE
   - [stateOrProvinceName]: DISALLOWED
 1
 
@@ -86,7 +86,7 @@ Enter Password:
 >>> cmd_line += " testpasswd"
 >>> cmd_line += " Fitzz-TeXnik-WeltSomewherecity.csr"
 >>> sys_argv= shlex.split(cmd_line) 
->>> prog_ca_root_singing(sys_argv) #doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
+>>> prog_ca_root_signing(sys_argv) #doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
 argument -ST/--stateOrProvinceName: invalid choice: 'MACH' (choose from ...)
 2
 
@@ -100,7 +100,7 @@ argument -ST/--stateOrProvinceName: invalid choice: 'MACH' (choose from ...)
 >>> cmd_line += " testpasswd"
 >>> cmd_line += " Fitzz-TeXnik-WeltSomewherecity.csr"
 >>> sys_argv= shlex.split(cmd_line) 
->>> prog_ca_root_singing(sys_argv)
+>>> prog_ca_root_signing(sys_argv)
 Enter Password:
 0
 

@@ -14,6 +14,7 @@ from pathlib import Path
 
 from ftwpki.baselibs.cli_parser import (
     CSRSigningParser,
+    TomlPreParser,
 )
 from ftwpki.baselibs.core import (
     cert_to_record,
@@ -27,13 +28,13 @@ from ftwpki.baselibs.openssl_comp import DbOpensslFile
 from ftwpki.baselibs.passwd import PasswordManager
 from ftwpki.baselibs.policies import IntermediatePolicy
 from ftwpki.baselibs.signer import CertificateSigner
-from ftwpki.baselibs.toml_utils import toml2_dn_policy
+from ftwpki.baselibs.toml_utils import toml2dn_policy, toml2ext
 from ftwpki.baselibs.transport import encrypt_transport_package
 from ftwpki.baselibs.validate import ValidatorDN, validate_and_clamp_validity
 
 
 # SECTION - Programm Signing
-def prog_ca_root_singing(argv: list[str] | None = None) -> int:
+def prog_ca_root_signing(argv: list[str] | None = None) -> int:
     """
     Entry point for signing Certificate Signing Requests (CSRs). (rw)
 
@@ -45,10 +46,15 @@ def prog_ca_root_singing(argv: list[str] | None = None) -> int:
     """
     try:
         # SECTION - Configuration
+        pre_parser = TomlPreParser()
+        pre_args, _ = pre_parser.parse_known_args(argv)
         ca_parser = CSRSigningParser()
         # for k, v in toml2_dn_policy(argv).items():
         #     print(f"{k}: {v}")
-        ca_parser.set_defaults(**toml2_dn_policy(argv))
+        file_conf = toml2dn_policy(pre_args.conf_file, pre_args.policy_name) 
+        ca_parser.set_defaults(**file_conf)
+        # ca_parser.set_defaults(**toml2_dn_policy(argv))
+        extention = toml2ext(pre_args.conf_file, pre_args.policy_name)
         args = ca_parser.parse_args(argv)
         # !SECTION - Configuration
 
@@ -76,10 +82,10 @@ def prog_ca_root_singing(argv: list[str] | None = None) -> int:
             pem_data=Path(args.private_key).read_bytes(), passphrase=pass_phrase
         )
         cert_signer = CertificateSigner(ca_cert=ca_cert, ca_key=private_key_obj)
-        policy = IntermediatePolicy(pathlength=args.path_length)
+        policy = IntermediatePolicy(path_length=args.path_length)
         validity_days = validate_and_clamp_validity(ca_cert, args.validity_days)
         signed_cert = cert_signer.sign(
-            csr=csr, policy=policy, validity_days=validity_days.actual_days
+            csr=csr, policy=policy, validity_days=validity_days.actual_days, **extention
         )
         signed_pem = cert_signer.get_pem(signed_cert)
         target_path:Path = Path(args.certificat_sign_request).with_suffix(".crt.pem")
