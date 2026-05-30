@@ -136,7 +136,6 @@ Namespace(countryName='match',
 
 .. !SECTION - Validating
 
-
 .. SECTION - Passwordhandling
 
 >>> from ftwpki.baselibs.passwd import PasswordManager
@@ -251,31 +250,31 @@ b'Content-Transfer-Encoding: base64\n'
 
 >>> print(get_cert_text(target_path.as_posix())) #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 Subject:
-         CN=Fitzz Reinshagen,OU=Security,O=Fitzz TeXnik Welt,L=Somewherecity,ST=Mystate,C=DE
-    Issuer:
-         CN=Fitzz CA Root,OU=Security,O=Fitzz TeXnik Welt,L=Somewherecity,ST=Mystate,C=DE
-    Serial Number:
-         ...
-    Not Before:
-         ...
-    Not After:
-         ...
-    Version:
-         v3
-    Extensions:
-        basicConstraints:
-             CA=Yes, path_length=0
-        keyUsage:
-             digital_signature, key_cert_sign, crl_sign
-        authorityKeyIdentifier:
-             b'...'
-        authorityInfoAccess:
-             OCSP: http://ocsp.deine-pki.test
-             caIssuers: http://pki.deine-pki.test/ca.crt
-        cRLDistributionPoints:
-             http://pki.deine-pki.test/crl_intermediate
-        subjectKeyIdentifier:
-             b'...'
+     CN=Fitzz Reinshagen,OU=Security,O=Fitzz TeXnik Welt,L=Somewherecity,ST=Mystate,C=DE
+Issuer:
+     CN=Fitzz CA Root,OU=Security,O=Fitzz TeXnik Welt,L=Somewherecity,ST=Mystate,C=DE
+Serial Number:
+     ...
+Not Before:
+     ...
+Not After:
+     ...
+Version:
+     v3
+Extensions:
+     basicConstraints:
+          CA=Yes, path_length=0
+     keyUsage:
+          key_cert_sign, crl_sign
+     authorityKeyIdentifier:
+          b'...'
+     authorityInfoAccess:
+          OCSP: http://ocsp.deine-pki.test
+          caIssuers: http://pki.deine-pki.test/ca.crt
+     cRLDistributionPoints:
+          http://pki.deine-pki.test/crl_intermediate
+     subjectKeyIdentifier:
+          b'...'
 
 
 
