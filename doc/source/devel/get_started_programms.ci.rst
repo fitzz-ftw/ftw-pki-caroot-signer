@@ -53,7 +53,7 @@ The Signing Programm
 .. SECTION - Configuration
 
 >>> from ftwpki.baselibs.toml_utils import toml2dn_policy, toml2ext, toml2dn
->>> from ftwpki.baselibs.cli_parser import CSRSigningParser, TomlPreParser
+>>> from ftwpki.baselibs.cli_parser import CSRSigningParser
 >>> from ftwpki.baselibs.policies import IntermediatePolicy
 >>> from ftwpki.baselibs.configuration import RootSignerPKIConfig
 
@@ -95,7 +95,7 @@ The Signing Programm
  'config_path': '#config#', 
  'data_path': '#data#'}
 
->>> temp_key_pem = "caroot.key.pem"
+>>> temp_key_pem = "CA.key.pem"
 
 
 >>> config.private_key(temp_key_pem) #doctest: +ELLIPSIS

@@ -85,7 +85,15 @@ V   ...           ...        ... CN=Muster-Verband Hamburg Regional CA...
 V   ...           ...        ... CN=Muster-Verband Hamburg Regional CA...
 <BLANKLINE>
 
+>>> cmd_line = " --policy-name intermediate "
+>>> cmd_line += " carootsecret "
+>>> cmd_line += f" {cert_name} "
 
+>>> sys_argv= shlex.split(cmd_line) 
+
+>>> prog_ca_root_signing(sys_argv) 
+the following arguments are required: -c/--cert/--certificate
+1
 
 >>> cmd_line = " --policy-name intermediate "
 >>> cmd_line += " -c ca_root.pki "
@@ -111,7 +119,7 @@ While policyvalidation following missmatch occurs:
 >>> sys_argv= shlex.split(cmd_line) 
 >>> getpass.getpass=stub_keyboard_interrupt
 >>> prog_ca_root_signing(sys_argv)
-1
+2
 
 >>> getpass.getpass=stub_exception
 >>> prog_ca_root_signing(sys_argv)

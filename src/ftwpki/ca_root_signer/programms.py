@@ -12,11 +12,11 @@ Modul programms documentation
 #DOC - Module docstring
 
 import getpass
+import traceback
 from pathlib import Path
 
 from ftwpki.baselibs.cli_parser import (
     CSRSigningParser,
-    TomlPreParser,
 )
 from ftwpki.baselibs.configuration import PKIPackage, RootSignerPKIConfig
 from ftwpki.baselibs.core import (
@@ -25,34 +25,32 @@ from ftwpki.baselibs.core import (
     load_certificate_from_pem,
     load_csr_from_pem,
     load_private_key_from_pem,
-    save_pem,
 )
 from ftwpki.baselibs.exceptions import PKIPolicyValidationError
 from ftwpki.baselibs.openssl_comp import DbOpensslFile
 from ftwpki.baselibs.passwd import PasswordManager
 from ftwpki.baselibs.policies import IntermediatePolicy
 from ftwpki.baselibs.signer import CertificateSigner
-from ftwpki.baselibs.toml_utils import toml2dn_policy, toml2ext
-from ftwpki.baselibs.transport import encrypt_transport_package
 from ftwpki.baselibs.utils import report_error
 from ftwpki.baselibs.validate import ValidatorDN, validate_and_clamp_validity
 
-# FIXME - Programm Signing
 
 #SECTION - prog_ca_root_signing
 # DOC - new
 def prog_ca_root_signing(argv: list[str] | None = None) -> int:
     try:
-        temp_key_pem = "caroot.key.pem"
+        temp_key_pem = "CA.key.pem"
         # SECTION - Configuration
         pre_parser = CSRSigningParser(add_help=False, allow_abbrev=False)
         pre_args , _ = pre_parser.parse_known_args(argv)
-        config = RootSignerPKIConfig(pre_args.certificate)
-        config.handle_pki_file()
-        file_defaults = config.get_dn_policies('ca_root.policy', 'intermediate')
+        if pre_args.certificate:
+            config = RootSignerPKIConfig(pre_args.certificate)
+            config.handle_pki_file()
+            file_defaults = config.get_dn_policies('ca_root.policy', 'intermediate')
         ca_parser = CSRSigningParser(prog="ftwpkicasign")
-        ca_parser.set_defaults(**file_defaults)
-        extention = config.get_extentions('ca_root.policy', 'intermediate')
+        if pre_args.certificate:
+            ca_parser.set_defaults(**file_defaults)
+            extention = config.get_extentions('ca_root.policy', 'intermediate')
         args = ca_parser.parse_args(argv)
         # !SECTION - Configuration
 
@@ -96,6 +94,8 @@ def prog_ca_root_signing(argv: list[str] | None = None) -> int:
         out_package.fullchain.extend(config.fullchain)
         out_package.to_encrypt = True
         out_package.save(args.certificat_sign_request)
+        out_package.to_encrypt = False
+        out_package.save(args.certificat_sign_request)
         # !SECTION - Transferfile
 
         # SECTION - Database openssl compatible
@@ -113,8 +113,9 @@ def prog_ca_root_signing(argv: list[str] | None = None) -> int:
         report_error(e)
         return 1
     except KeyboardInterrupt:
-        return 1
+        return 2
     except Exception as e:
+        traceback.print_exc()
         report_error(e)
         return 1
 #!SECTION - prog_ca_root_signing
@@ -135,10 +136,8 @@ if __name__ == "__main__":  # pragma: no cover
     # Pfad zu den dokumentierenden Tests
     testfiles_dir = Path(__file__).parents[3] / "doc/source/devel"
     test_files = [
-        # "get_started_programms.ci.rst",
-        "get_started_programms_DEV.ci.rst",
-        "get_started_run_programms_DEV.ci.rst",
-        # "get_started_run_programms.ci.rst",
+        "get_started_programms.ci.rst",
+        "get_started_run_programms.ci.rst",
     ]
     for file in test_files:
         test_file = testfiles_dir / file
