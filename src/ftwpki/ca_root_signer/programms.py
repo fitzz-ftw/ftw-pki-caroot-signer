@@ -6,10 +6,9 @@
 programms
 ===============================
 
+Provide programs for CA management and certificate operations.
 
-Modul programms documentation
 """
-#DOC - Module docstring
 
 import getpass
 import traceback
@@ -35,9 +34,19 @@ from ftwpki.baselibs.utils import report_error
 from ftwpki.baselibs.validate import ValidatorDN, validate_and_clamp_validity
 
 
-#SECTION - prog_ca_root_signing
-# DOC - new
+# SECTION - prog_ca_root_signing
 def prog_ca_root_signing(argv: list[str] | None = None) -> int:
+    """
+    Execute the CA root signing process for certificate requests.
+
+    This function handles the configuration, validation, and signing
+    workflow for intermediate certificate requests.
+
+    :param argv: Optional list of command line arguments.
+    :raises PKIPolicyValidationError: If the provided policy validation fails.
+    :raises Exception: Catches and reports general unexpected errors.
+    :returns: 0 on success, 1 on error, 2 on keyboard interrupt.
+    """
     try:
         temp_key_pem = "CA.key.pem"
         # SECTION - Configuration
@@ -73,7 +82,7 @@ def prog_ca_root_signing(argv: list[str] | None = None) -> int:
         private_key_obj = load_private_key_from_pem(
             pem_data=config.private_key(temp_key_pem), passphrase=pass_phrase
         )
-        policy = IntermediatePolicy(pathlength = args.path_length)
+        policy = IntermediatePolicy(path_length = args.path_length)
         validity_days = validate_and_clamp_validity(ca_cert, args.validity_days)
         cert_signer = CertificateSigner(
             ca_cert=ca_cert,

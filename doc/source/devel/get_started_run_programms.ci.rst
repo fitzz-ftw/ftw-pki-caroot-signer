@@ -3,7 +3,7 @@ The Signing Programm
 
 .. SECTION - Setup
 
->>> test_data_pre= "test_ok_data2"
+>>> test_data_pre= "data-root-signer"
 >>> from fitzzftw.devtools.testinfra import TestHomeEnvironment
 >>> from pathlib import Path
 >>> env = TestHomeEnvironment(Path("doc/source/devel/testhome"),
@@ -15,11 +15,11 @@ The Signing Programm
 .. !SECTION
 .. SECTION - Prepare
 
->>> ca_pki_path = env.copy2cwd(f"{test_data_pre}/ca_root.pki",
+>>> ca_pki_path = env.copy2cwd(f"{test_data_pre}/ca_root_conf.pki",
 ...             "ca_root.pki")
 
->>> cert_path = env.copy2cwd(f"{test_data_pre}/Muster-Verband-Hamburg-Regional-CA_Hamburg.csr",
-...             "M-V-HH-CA_Hamburg.csr")
+>>> cert_path = env.copy2cwd(f"{test_data_pre}/M-V-HH-CA.csr",
+...             "M-V-HH-CA.csr")
 
 >>> cert_name = cert_path.name
 
@@ -49,7 +49,7 @@ The Signing Programm
 ['--policy-name', 'intermediate', 
  '-c', 'ca_root.pki', 
  'carootsecret', 
- 'M-V-HH-CA_Hamburg.csr']
+ 'M-V-HH-CA.csr']
 
 .. !SECTION
 

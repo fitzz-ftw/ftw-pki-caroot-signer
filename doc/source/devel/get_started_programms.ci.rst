@@ -3,7 +3,7 @@ The Signing Programm
 
 .. SECTION - Setup
 
->>> test_data_pre= "test_ok_data2"
+>>> test_data_pre= "data-root-signer"
 >>> from fitzzftw.devtools.testinfra import TestHomeEnvironment
 >>> from pathlib import Path
 >>> env = TestHomeEnvironment(Path("doc/source/devel/testhome"),
@@ -14,7 +14,7 @@ The Signing Programm
 .. !SECTION
 .. SECTION - Prepare
 
->>> ca_pki_path = env.copy2cwd(f"{test_data_pre}/ca_root.pki",
+>>> ca_pki_path = env.copy2cwd(f"{test_data_pre}/ca_root_conf.pki",
 ...             "ca_root.pki")
 
 >>> cert_path = env.copy2cwd(f"{test_data_pre}/M-V-HH-CA.csr",
@@ -32,6 +32,7 @@ The Signing Programm
 
 >>> cmd_line = " --policy-name intermediate"
 >>> cmd_line += " -c ca_root.pki "
+>>> cmd_line += " -P 1"
 >>> cmd_line += " -CN no " #doctest: +SKIP
 >>> cmd_line += " carootsecret "
 >>> cmd_line += f" {cert_name} "
@@ -40,7 +41,8 @@ The Signing Programm
 >>> sys_argv= shlex.split(cmd_line) 
 >>> sys_argv #doctest: +NORMALIZE_WHITESPACE -SKIP
 ['--policy-name', 'intermediate', 
- '-c', 'ca_root.pki', 
+ '-c', 'ca_root.pki',
+  '-P', '1',
  'carootsecret', 
  'M-V-HH-CA.csr']
 
@@ -143,7 +145,7 @@ Namespace(countryName='match',
      private_dir=None, 
      certificate='ca_root.pki', 
      validity_days=365, 
-     path_length=0, 
+     path_length=1, 
      passphrasefile='carootsecret', 
      certificat_sign_request='M-V-HH-CA.csr', 
      policy={'countryName': 'match', 
@@ -228,8 +230,9 @@ Enter Password:
 ...      ca_cert=ca_cert,
 ...      ca_key=private_key_obj)
 
+>> print(args.path_length)
 
->>> policy = IntermediatePolicy(pathlength = args.path_length)
+>>> policy = IntermediatePolicy(path_length = args.path_length)
 
 >>> from ftwpki.baselibs.validate import validate_and_clamp_validity
 
@@ -318,25 +321,27 @@ Version:
      v3
 Extensions:
      basicConstraints:
-          CA=Yes, path_length=0
+          CA=Yes, path_length=1
      keyUsage:
           key_cert_sign, crl_sign
      authorityKeyIdentifier:
-          b'...'
+          b...
      authorityInfoAccess:
           OCSP: http://ocsp.example.org/root
           caIssuers: http://pki.example.org/root/root.crt
      cRLDistributionPoints:
           http://pki.example.org/rsm/regional.crl
      subjectKeyIdentifier:
-          b'...'
+          b...
 
 .. !SECTION - Check Result 
 
 
 .. SECTION - Teardown
 
->> env.clean_home()
+>> env.clean_output()
+
+>>> env.clean_home()
 >>> env.teardown()
 
 .. !SECTION
