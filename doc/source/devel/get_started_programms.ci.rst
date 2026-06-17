@@ -69,10 +69,10 @@ The Signing Programm
 >>> config = RootSignerPKIConfig(pre_args.certificate)
 
 >>> config._paths #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
-{'config_path': PosixPath('.../.config/ftwpki'), 
- 'data_path': PosixPath('.../.local/share/ftwpki'), 
- 'passphrases': PosixPath('.../.config/ftwpki/.private'), 
- 'zip': PosixPath('.../.config/ftwpki/.private')}
+{'config_path': ...Path('.../.config/ftwpki'), 
+ 'data_path': ...Path('.../.local/share/ftwpki'), 
+ 'passphrases': ...Path('.../.config/ftwpki/.private'), 
+ 'zip': ...Path('.../.config/ftwpki/.private')}
 
 >>> config.in_zip
 ['private_keys', 'certs', 'chains', 'policies']
