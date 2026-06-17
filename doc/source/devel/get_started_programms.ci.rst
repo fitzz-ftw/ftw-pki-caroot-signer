@@ -172,7 +172,7 @@ Namespace(countryName='match',
 >>> config.get_certs() #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 {'ca.crt.pem': <Certificate(subject=<Name(...CN=Muster-Verband Bundesverband Root CA...)>, ...)>, 
  'user.crt.pem': <Certificate(subject=<Name(...CN=Muster-Verband Bundesverband Root CA...)>, ...)>, 
- 'caroot.crt.pem': <Certificate(subject=<Name(...CN=Muster-Verband Bundesverband Root CA)>, ...)>}
+ 'caroot.crt.pem': <Certificate(subject=<Name(...CN=Muster-Verband Bundesverband Root CA...)>, ...)>}
 
 >>> ca_cert = config.own_cert 
 >>> ca_cert #doctest: +ELLIPSIS
