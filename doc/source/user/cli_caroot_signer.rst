@@ -1,4 +1,4 @@
-Intermediate Command-Line Interface     
+CA Root Signing Command-Line Interface     
 ============================================
 
 .. argparse::

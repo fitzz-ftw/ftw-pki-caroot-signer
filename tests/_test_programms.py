@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 import pytest
 
-from ftwpki.ca_root_signer.programms import prog_ca_root_singing
+from ftwpki.ca_root_signer.programms import prog_ca_root_signing
 
 # SECTION - Programm: Signing
 
@@ -50,31 +50,31 @@ def ca_test_env(monkeypatch):
 @pytest.mark.skipif(
     sys.platform == "win32", reason="Windows handles file locks differently (PermissionError in CI)"
 )
-def test_prog_ca_root_singing_success(ca_test_env):
+def test_prog_ca_root_signing_success(ca_test_env):
     """Szenario: Alles korrekt -> Return 0"""
     cmd = (
-        "--conf-file ca_root_conf.toml -k privat/ca.key.pem "
+        "--conf-file ca_root_conf.toml -k privat/ca "
         "--private-dir privat --policy-name intermediate "
         "-c ca.cert testpasswd Fitzz-TeXnik-WeltSomewherecity.csr"
     )
 
     argv = shlex.split(cmd)
 
-    result = prog_ca_root_singing(argv)
+    result = prog_ca_root_signing(argv)
 
     assert result == 0
     # Check ob das Zertifikat erstellt wurde
-    assert Path("Fitzz-TeXnik-WeltSomewherecity.crt").exists()
+    assert Path("Fitzz-TeXnik-WeltSomewherecity.crt.pem").exists()
     # Check ob Datenbank-Eintrag existiert
     assert Path("db/index.txt").exists()
 
 @pytest.mark.skipif(
     sys.platform == "win32", reason="Windows handles file locks differently (PermissionError in CI)"
 )
-def test_prog_ca_root_singing_success_dbdir_exists(ca_test_env):
+def test_prog_ca_root_signing_success_dbdir_exists(ca_test_env):
     """Szenario: Alles korrekt -> Return 0"""
     cmd = (
-        "--conf-file ca_root_conf.toml -k privat/ca.key.pem "
+        "--conf-file ca_root_conf.toml -k privat/ca "
         "--private-dir privat --policy-name intermediate "
         "-c ca.cert testpasswd Fitzz-TeXnik-WeltSomewherecity.csr"
     )
@@ -84,18 +84,18 @@ def test_prog_ca_root_singing_success_dbdir_exists(ca_test_env):
     # um den Branch in Zeile 110 zu covern.
     Path("db").mkdir(parents=True, exist_ok=True)
 
-    result = prog_ca_root_singing(argv)
+    result = prog_ca_root_signing(argv)
 
     assert result == 0
     # Check ob das Zertifikat erstellt wurde
-    assert Path("Fitzz-TeXnik-WeltSomewherecity.crt").exists()
+    assert Path("Fitzz-TeXnik-WeltSomewherecity.crt.pem").exists()
     # Check ob Datenbank-Eintrag existiert
     assert Path("db/index.txt").exists()
 
 @pytest.mark.skipif(
     sys.platform == "win32", reason="Windows handles file locks differently (PermissionError in CI)"
 )
-def test_prog_ca_root_singing_validation_fail(ca_test_env):
+def test_prog_ca_root_signing_validation_fail(ca_test_env):
     """Szenario: Policy-Verstoß (falsche DN) -> Return 1"""
     # Hier müsstest du ein CSR nutzen, das die Policy verletzt
     # Oder die Policy in der TOML kurzfristig via Code manipulieren
@@ -108,12 +108,12 @@ def test_prog_ca_root_singing_validation_fail(ca_test_env):
         m.setattr("getpass.getpass", lambda _: "strenggeheim")
 
         cmd = (
-            "--conf-file ca_root_conf.toml -k privat/ca.key.pem "
+            "--conf-file ca_root_conf.toml -k privat/ca "
             "--private-dir privat -c ca.cert testpasswd "
             "Fitzz-TeXnik-WeltSomewherecity.csr"
         )
 
-        result = prog_ca_root_singing(shlex.split(cmd))
+        result = prog_ca_root_signing(shlex.split(cmd))
         assert result == 1
 
 
@@ -122,13 +122,13 @@ VALID_ARGV = ["my_pass_file", "my_request.csr"]
 @pytest.mark.skipif(
     sys.platform == "win32", reason="Windows handles file locks differently (PermissionError in CI)"
 )
-def test_prog_ca_root_singing_exception():
+def test_prog_ca_root_signing_exception():
     # Testet den harten Absturz (Return 2)
     with patch("ftwpki.ca_root_signer.programms.CSRSigningParser") as mock_parser:
         # Wir lassen die Instanziierung des Parsers scheitern
         mock_parser.side_effect = Exception("Crash")
 
-        result = prog_ca_root_singing(VALID_ARGV)
+        result = prog_ca_root_signing(VALID_ARGV)
         assert result == 2
 
 

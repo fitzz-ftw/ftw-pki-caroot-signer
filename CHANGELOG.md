@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+###### [0.0.4] - 2026-06-17
+
+###### Added
+- Integrate help system and improve error handling
+- Integrate PKIPackage and introduce temporary DEV signing workflow
+
+###### Changed
+- Adapt to streamlined baselibs and unify key-name parameters
+- Update CA root signing entry point and configuration loading
+- Rename legacy TOML functions to modernize utility interfaces
+- Cleanup documentation, data, and docstrings
+
+###### Fixed
+- Improve error handling in CA root creator components
+
+###### Testing
+- Achieve 100% total coverage for the caroot-signer component
+
+
 ## [0.0.3a2] - 2026-05-18
 
 ### Added

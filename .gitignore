@@ -64,4 +64,7 @@ piplist.txt
 
 # Pytest coverage
 htmlcov
-git-log.txt
+git-log*.txt
+doc/TODO_ca_root_signer.md
+git-diff.txt
+git-diff*.txt

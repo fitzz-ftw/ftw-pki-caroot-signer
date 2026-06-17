@@ -55,7 +55,7 @@ Issues = "https://github.com/fitzz-ftw/ftw-pki-caroot-signer/issues"
 Changelog = "https://github.com/fitzz-ftw/ftw-pki-caroot-signer/blob/main/CHANGELOG.md"
 
 [project.scripts]
-ftwpkicarootsigner = "ftwpki.ca_root_signer.programms:prog_ca_root_singing"
+ftwpkicarootsigner = "ftwpki.ca_root_signer.programms:prog_ca_root_signing"
 
 [project.optional-dependencies]
 doc = [
