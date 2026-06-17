@@ -70,7 +70,7 @@ The Signing Programm
 
 >>> config._paths #doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
 {'config_path': ...Path('.../ftwpki'), 
- 'data_path': ...Path('.../.local/share/ftwpki'), 
+ 'data_path': ...Path('.../ftwpki'), 
  'passphrases': ...Path('.../ftwpki/.private'), 
  'zip': ...Path('.../ftwpki/.private')}
 
